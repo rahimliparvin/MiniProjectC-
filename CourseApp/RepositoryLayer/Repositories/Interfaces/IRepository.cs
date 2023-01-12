@@ -14,7 +14,7 @@ namespace RepositoryLayer.Repositories.Interfaces
         void Delete(T entity);
         void Update(T entity);
         T Get(Predicate<T> predicate);
-        List<T> GetAll();
+        List<T> GetAll(Predicate<T> predicate );
 
     }
 }
