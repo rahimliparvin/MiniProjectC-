@@ -10,9 +10,10 @@ namespace ServiceLayer.Services.Interfaces
     public interface ITeacherService
     {
         Teacher Create(Teacher teacher);
-        Teacher Delete(int Id);
-        Teacher GetById(int Id);
+        void Delete(int? id);
+        Teacher GetById(int id);
         List<Teacher> Search(string searchText);
         List<Teacher> GetAll();
+        Teacher Update(int id ,Teacher teacher);
     }
 }

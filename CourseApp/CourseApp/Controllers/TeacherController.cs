@@ -25,32 +25,30 @@ namespace CourseApp.Controllers
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher name");
             TeacherName: string teacherName = Console.ReadLine();
 
-            string teacherNameStr;
-            if (string.IsNullOrEmpty(teacherName))
+            if (teacherName == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add teacher name");
                 goto TeacherName;
+
             }
 
-            var name = teacherName.Trim();
+            var name = teacherName;
             if (!Regex.IsMatch(name, "^[a-zA-Z]+$"))
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct name");
                 goto TeacherName;
             }
            
-
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher surname");
             TeacherSurname: string teacherSurname = Console.ReadLine();
 
-            string teacherSurnameStr;
-            if (string.IsNullOrEmpty(teacherSurname))
+            if (teacherSurname == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add teacher surname");
                 goto TeacherSurname;
             }
-
-            var surname = teacherSurname.Trim();
+           
+            var surname = teacherSurname;
             if (!Regex.IsMatch(surname, "^[a-zA-Z]+$"))
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct surname");
@@ -59,13 +57,13 @@ namespace CourseApp.Controllers
 
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher address");
             TeacherAddress: string teacherAddress = Console.ReadLine();
-            string teacherAddressStr;
-            if (string.IsNullOrEmpty(teacherAddress))
+            if (teacherAddress == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add teacher address");
                 goto TeacherAddress;
-            }
 
+            }
+      
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher age");
             Age: string teacherAgeStr = Console.ReadLine();
             int teacherAge;
@@ -100,7 +98,6 @@ namespace CourseApp.Controllers
             }
 
         }
-
         public void GetAll()
         {
             var result = _teacherService.GetAll();
@@ -119,6 +116,61 @@ namespace CourseApp.Controllers
                
             }
         }
+        public void Delete()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add teacher id for delete:");
+            TeacherId: string teacherId = Console.ReadLine();
+
+            int id;
+
+            bool isCorrectId = int.TryParse(teacherId, out id);
+
+            if (isCorrectId)
+                try
+                {
+                    _teacherService.Delete(id);
+                    ConsoleColor.Green.WriteConsole("Successfully delete");
+                }
+                catch (Exception ex)
+                {
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add teacher id again");
+                    goto TeacherId;
+                }
+            else
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format id");
+                goto TeacherId;
+            }
+        }
+        public void Search()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
+            Searchtext: string searchText = Console.ReadLine();
+
+            if (searchText ==  string.Empty)
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please  dont empty search text");
+                goto Searchtext;
+            }
+
+            try
+            {
+                var response = _teacherService.Search(searchText);
+
+                foreach (var item in response)
+                {
+                   ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
+                      $"Surname:{item.Surname} Age:{item.Age} Address:{item.Address}");
+                }
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add search text again");
+                goto Searchtext;
+            }
+           
+        }
+
 
 	}
 }

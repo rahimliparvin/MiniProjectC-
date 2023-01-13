@@ -25,7 +25,7 @@ while (true)
                 Console.WriteLine("Update");
                 break;
             case 3:
-                Console.WriteLine("Delete");
+                teacherController.Delete();
                 break;
             case 4:
                 Console.WriteLine("Delete");
@@ -34,7 +34,7 @@ while (true)
                 teacherController.GetAll();
                 break;
             case 6:
-                Console.WriteLine("Delete");
+                teacherController.Search();
                 break;
             case 7:
                 Console.WriteLine("Delete");

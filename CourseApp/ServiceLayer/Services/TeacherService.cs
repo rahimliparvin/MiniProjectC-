@@ -27,10 +27,17 @@ namespace ServiceLayer.Services
             _count++;
             return teacher;
         }
-
-        public Teacher Delete(int Id)
+          
+        public void Delete(int? id)
         {
-            throw new NotImplementedException();
+
+            if (id is null) throw new ArgumentNullException();
+
+            Teacher dbTeacher = _repo.Get(m => m.Id == id);
+
+            if (dbTeacher == null) throw new NullReferenceException("Data notfound");
+
+            _repo.Delete(dbTeacher);
         }
 
         public List<Teacher> GetAll()
@@ -44,6 +51,13 @@ namespace ServiceLayer.Services
         }
 
         public List<Teacher> Search(string searchText)
+        {
+            List<Teacher> teachers = _repo.GetAll(m => m.Name.ToLower().Contains(searchText.ToLower()) || m.Surname.ToLower().Contains(searchText.ToLower()));
+            if (teachers.Count == 0) throw new Exception("Data not found");
+            return teachers;
+        }
+
+        public Teacher Update(int id, Teacher teacher)
         {
             throw new NotImplementedException();
         }
