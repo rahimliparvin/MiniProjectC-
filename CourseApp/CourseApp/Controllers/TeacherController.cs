@@ -145,9 +145,17 @@ namespace CourseApp.Controllers
         public void Search()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
-            Searchtext: string searchText = Console.ReadLine();
+        Searchtext: string searchText = Console.ReadLine();
 
-            if (searchText ==  string.Empty)
+            if (!Regex.IsMatch(searchText, "^[a-zA-Z]+$"))
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format search text");
+                goto Searchtext;
+            }  
+
+
+
+                if (searchText ==  string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please  dont empty search text");
                 goto Searchtext;
@@ -169,6 +177,35 @@ namespace CourseApp.Controllers
                 goto Searchtext;
             }
            
+        }
+        public void GetById()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add Id");
+            Id: string idStr = Console.ReadLine();
+           
+            int id;
+            
+            bool isCorrectId = int.TryParse(idStr, out id);
+            if (isCorrectId)
+            {
+                try
+                {
+                    var respons = _teacherService.GetById(id);
+                    ConsoleColor.Green.WriteConsole($"Id:{respons.Id} Name:{respons.Name} " +
+                          $"Surname:{respons.Surname} Age:{respons.Age} Address:{respons.Address}");
+                }
+                catch (Exception ex)
+                {
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add again id");
+                    goto Id;
+                }
+            }
+            else
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format id");
+                goto Id;
+            }
+
         }
 
 

@@ -1,5 +1,8 @@
 ﻿using DomainLayer.Entities;
 using RepositoryLayer.Repositories;
+using ServiceLayer.Exceptions;
+using ServiceLayer.Helpers;
+using ServiceLayer.Helpers.Constans;
 using ServiceLayer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -35,7 +38,7 @@ namespace ServiceLayer.Services
 
             Teacher dbTeacher = _repo.Get(m => m.Id == id);
 
-            if (dbTeacher == null) throw new NullReferenceException("Data notfound");
+            if (dbTeacher == null) ConsoleColor.DarkRed.WriteConsole(ResponseMessages.NotFound);
 
             _repo.Delete(dbTeacher);
         }
@@ -45,15 +48,17 @@ namespace ServiceLayer.Services
             return _repo.GetAll();
         }
 
-        public Teacher GetById(int Id)
+        public Teacher GetById(int id)
         {
-            throw new NotImplementedException();
+            Teacher teacher = _repo.Get(m => m.Id == id);
+            if (teacher == null) throw new NotFoundException(ResponseMessages.NotFound);
+            return teacher ; 
         }
 
         public List<Teacher> Search(string searchText)
         {
             List<Teacher> teachers = _repo.GetAll(m => m.Name.ToLower().Contains(searchText.ToLower()) || m.Surname.ToLower().Contains(searchText.ToLower()));
-            if (teachers.Count == 0) throw new Exception("Data not found");
+            if (teachers.Count == 0) throw new NotFoundException(ResponseMessages.NotFound);
             return teachers;
         }
 

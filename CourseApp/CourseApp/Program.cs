@@ -1,5 +1,6 @@
 ﻿using CourseApp.Controllers;
 using ServiceLayer.Helpers;
+using ServiceLayer.Helpers.Enums;
 
 TeacherController teacherController = new();
 
@@ -18,28 +19,49 @@ while (true)
     {
         switch (selectedOption)
         {
-            case 1:
+            case (int)Options.CreateTeacher:
                 teacherController.Create();
                 break;
-            case 2:
+            case (int)Options.UpdateTeacher:
                 Console.WriteLine("Update");
                 break;
-            case 3:
+            case (int)Options.DeleteTeacher:
                 teacherController.Delete();
                 break;
-            case 4:
-                Console.WriteLine("Delete");
+            case (int)Options.GetTeacherById:
+                teacherController.GetById();
                 break;
-            case 5:
+            case (int)Options.GetAllTeachers:
                 teacherController.GetAll();
                 break;
-            case 6:
+            case (int)Options.SearchMethodTeacherNameAndSurname:
                 teacherController.Search();
                 break;
-            case 7:
+            case (int)Options.CreateGroup:
                 Console.WriteLine("Delete");
                 break;
-            case 8:
+            case (int)Options.UpdateGroup:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.GetGroupById:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.DeleteGroup:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.GetGroupsByCapacity:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.GetGroupsByTeacherId:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.GetAllGroupsByTeacherName:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.SearchMethodForGroupByName:
+                Console.WriteLine("Delete");
+                break;
+            case (int)Options.GetAllGroupsCount:
                 Console.WriteLine("Delete");
                 break;
             default:
