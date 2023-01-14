@@ -3,6 +3,7 @@ using ServiceLayer.Helpers;
 using ServiceLayer.Helpers.Enums;
 
 TeacherController teacherController = new();
+GroupController  groupController  = new();
 
 
 while (true)
@@ -23,13 +24,13 @@ while (true)
                 teacherController.Create();
                 break;
             case (int)Options.UpdateTeacher:
-                Console.WriteLine("Update");
+                teacherController.Update();
                 break;
             case (int)Options.DeleteTeacher:
                 teacherController.Delete();
                 break;
             case (int)Options.GetTeacherById:
-                teacherController.GetById();
+                teacherController.GetByTeacherId();
                 break;
             case (int)Options.GetAllTeachers:
                 teacherController.GetAll();
@@ -38,13 +39,13 @@ while (true)
                 teacherController.Search();
                 break;
             case (int)Options.CreateGroup:
-                Console.WriteLine("Delete");
+                groupController.Create();
                 break;
             case (int)Options.UpdateGroup:
                 Console.WriteLine("Delete");
                 break;
             case (int)Options.GetGroupById:
-                Console.WriteLine("Delete");
+                groupController.GetById();
                 break;
             case (int)Options.DeleteGroup:
                 Console.WriteLine("Delete");
@@ -59,7 +60,7 @@ while (true)
                 Console.WriteLine("Delete");
                 break;
             case (int)Options.SearchMethodForGroupByName:
-                Console.WriteLine("Delete");
+                groupController.Search();
                 break;
             case (int)Options.GetAllGroupsCount:
                 Console.WriteLine("Delete");

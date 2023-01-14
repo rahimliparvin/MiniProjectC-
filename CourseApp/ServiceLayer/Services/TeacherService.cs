@@ -25,6 +25,7 @@ namespace ServiceLayer.Services
         }
         public Teacher Create(Teacher teacher)
         {
+           
             teacher.Id = _count;
             _repo.Create(teacher);
             _count++;
@@ -48,7 +49,7 @@ namespace ServiceLayer.Services
             return _repo.GetAll();
         }
 
-        public Teacher GetById(int id)
+        public Teacher GetByTeacherId(int id)
         {
             Teacher teacher = _repo.Get(m => m.Id == id);
             if (teacher == null) throw new NotFoundException(ResponseMessages.NotFound);
@@ -62,9 +63,18 @@ namespace ServiceLayer.Services
             return teachers;
         }
 
-        public Teacher Update(int id, Teacher teacher)
+
+
+        public Teacher Update(int id)
         {
-            throw new NotImplementedException();
+            Teacher teacher1 = _repo.Get(m => m.Id == id);
+            //if (teacher1 == null) throw new ArgumentNullException();//throw new NotFoundException(ResponseMessages.NotFound);
+            return teacher1;
+          //  if (id == null) throw new ArgumentNullException();
+           // if (teacher == null) throw new ArgumentNullException();
+           // Teacher  teacher1 = _repo.Get(m => m.Id == id);
+           
+
         }
     }
 }
