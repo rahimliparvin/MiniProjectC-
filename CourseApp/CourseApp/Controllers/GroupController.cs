@@ -13,6 +13,7 @@ using Group = DomainLayer.Entities.Group;
 using RepositoryLayer.Repositories;
 using ServiceLayer.Exceptions;
 using ServiceLayer.Helpers.Constans;
+using System.Numerics;
 
 namespace CourseApp.Controllers
 {
@@ -29,232 +30,117 @@ namespace CourseApp.Controllers
 
         public void Create()
         {
-            ConsoleColor.DarkCyan.WriteConsole("Please add group name:");
-        GroupName: string groupName = Console.ReadLine();
+            ConsoleColor.DarkCyan.WriteConsole("Please add teacher id:");
+            TeacherId: string groupTeacherIdStr = Console.ReadLine();
 
-            if (groupName == string.Empty)
+            int groupTeacherId;
+            bool isCorrectGroupTeacherId = int.TryParse(groupTeacherIdStr, out groupTeacherId);
+            if (!isCorrectGroupTeacherId || groupTeacherId < 1)
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct  format id");
+                goto TeacherId;
+            }
+           
+            ConsoleColor.DarkCyan.WriteConsole("Please add group name:");
+            GroupName: string groupName = Console.ReadLine();
+
+            var name4 = groupName;
+            if(!Regex.IsMatch(name4 , @"^[a-zA-Z0-9]+$") || groupName == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct format name");
-                goto GroupName;
+                 goto GroupName;
             }
-
-
-            //ConsoleColor.DarkCyan.WriteConsole("Please add teacher id:");
-            //TeacherId: string groupTeacherIdStr = Console.ReadLine();
-
-            //int groupTeacherId;
-            //bool isCorrectGroupTeacherId = int.TryParse(groupTeacherIdStr, out groupTeacherId);
-
-            //if (!isCorrectGroupTeacherId)
-            //{
-            //    ConsoleColor.DarkRed.WriteConsole("Please add correct  format id");
-            //    goto TeacherId;
-            //}
-
+        
             ConsoleColor.DarkCyan.WriteConsole("Please add group capacity:");
-        GroupCapacity: string groupCapacityStr = Console.ReadLine();
+            GroupCapacity: string groupCapacityStr = Console.ReadLine();
 
             int groupCapacity;
 
             bool isCorrectGroupCapacity = int.TryParse(groupCapacityStr, out groupCapacity);
             if (!isCorrectGroupCapacity)
             {
-                ConsoleColor.DarkRed.WriteConsole("Please add correct format group capacity");
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format group capacity:");
                 goto GroupCapacity;
             }
-
-            ConsoleColor.DarkCyan.WriteConsole("Please add teacher id:");
-        TeacherId: string groupTeacherIdStr = Console.ReadLine();
-
-            int groupTeacherId;
-            bool isCorrectGroupTeacherId = int.TryParse(groupTeacherIdStr, out groupTeacherId);
-            if (isCorrectGroupTeacherId)
+            else
             {
-                Group group = new Group()
+                if(groupCapacity > 40 || groupCapacity < 1)
                 {
+                    ConsoleColor.DarkRed.WriteConsole("The capacity of the group is [min 1,max 40]." +
+                  " Please enter the appropriate capacity for the group capacity:");
+                    goto GroupCapacity;
 
-                    Name = groupName,
-                    Capacity = groupCapacity,
-                    CreateDate = DateTime.Now,
+                }
+            }
 
-                };
+            Group group = new Group()
+            {
+
+                Name = groupName,
+                Capacity = groupCapacity,
+                CreateDate = DateTime.Now,
+
+            };
+            try
+            {
+                var res = _groupService.Create(groupTeacherId, group);
+
+                ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
+                $"Capacity:{res.Capacity} CreateDate:{res.CreateDate} " +
+                $"TeacherId {res.Teacher.Id} TeacherName {res.Teacher.Name} " +
+                $"TeacherSurname {res.Teacher.Surname} TeacherAge {res.Teacher.Age} " +
+                $"TeacherAddress {res.Teacher.Address}");
+
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add again TeacherId");
+                goto TeacherId;
+            }
+        }
+        public void GetGroupById()
+        {
+            
+            ConsoleColor.DarkCyan.WriteConsole("Please add Id");
+            Id: string idStr = Console.ReadLine();
+            int id;
+            bool isCorrectId =  int.TryParse(idStr, out id);
+            if (isCorrectId && id >= 1)
+            {
                 try
                 {
-                    var res = _groupService.Create(groupTeacherId, group);
+                    var result = _groupService.GetGroupById(id);
 
-                    ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
-                            $"Capacity:{res.Capacity} CreateDate:{res.CreateDate} TeacherId {res.Teacher.Id} TeacherName {res.Teacher.Name} " +
-                            $"TeacherSurname {res.Teacher.Surname} TeacherAge {res.Teacher.Age} TeacherAddress {res.Teacher.Address}");
-
+                    ConsoleColor.Green.WriteConsole($"Id:{result.Id} Name:{result.Name} " +
+                    $"Capacity:{result.Capacity} CreateDate:{result.CreateDate} " +
+                    $"TeacherId {result.Teacher.Id} TeacherName {result.Teacher.Name} " +
+                    $"TeacherSurname {result.Teacher.Surname} TeacherAge {result.Teacher.Age} " +
+                    $"TeacherAddress {result.Teacher.Address}");
                 }
                 catch (Exception ex)
                 {
-                    
-                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add again GroupName");
-                    goto GroupName;
-                    //ConsoleColor.DarkRed.WriteConsole("Please add new group name");
-                    //goto GroupName;
-
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message);
+                   
                 }
-            
-        
-            //Group group = new Group()
-            //{
+               
+            }
+            else
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format id.id min = 1");
+                goto Id;
+            }
+         
 
-            //    Name = groupName,
-            //    Capacity = groupCapacity,
-            //    CreateDate = DateTime.Now,
-
-            //};
-            //try
-            //{
-            //    var res = _groupService.Create(groupTeacherId, group);
-
-            //    ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
-            //            $"Capacity:{res.Capacity} CreateDate:{res.CreateDate} TeacherId {res.Teacher.Id} TeacherName {res.Teacher.Name} " +
-            //            $"TeacherSurname {res.Teacher.Surname} TeacherAge {res.Teacher.Age} TeacherAddress {res.Teacher.Address}");
-
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "This name is used");
-            //    ConsoleColor.DarkRed.WriteConsole("Please add new group name");
-            //    goto GroupName;
-
-
-            //if (!isCorrectGroupTeacherId)
-            //{
-            //    ConsoleColor.DarkRed.WriteConsole("Please add correct  format id");
-            //}
-
-            //    if (isCorrectGroupTeacherId)
-            //    {
-            //        try
-            //        {
-            //            Group group = new Group()
-            //            {
-
-            //                Name = groupName,
-            //                Capacity = groupCapacity,
-            //                CreateDate = DateTime.Now,
-
-            //            };
-            //            var res = _groupService.Create(groupTeacherId, group);
-
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            ConsoleColor.DarkRed.WriteConsole(ex.Message);
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        ConsoleColor.DarkRed.WriteConsole("Please add correct format id");
-            //    }
-            //    var res = _groupService.Create(groupTeacherId, group);
-            //ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
-            //$"Capacity:{res.Capacity} CreateDate:{res.CreateDate} TeacherId {res.Teacher.Id} TeacherName {res.Teacher.Name} " +
-            //$"TeacherSurname {res.Teacher.Surname} TeacherAge {res.Teacher.Age} TeacherAddress {res.Teacher.Address}");
-
-
-            //catch (Exception ex)
-            //{
-
-            //    ConsoleColor.DarkRed.WriteConsole(ex.Message);
-            //  //  ConsoleColor.DarkRed.WriteConsole("Please add new group name");
-
-
-
-
-            //if (groupName == null)
-            //{
-            //    ConsoleColor.DarkRed.WriteConsole("Please add correct format name:");
-            //    goto GroupName;
-            //}
-
-            //if (groupName == string.Empty)
-            //{
-            //    ConsoleColor.DarkRed.WriteConsole("Please add correct format name:");
-            //    goto GroupName;
-            //}
-            //else
-            //{
-            //    Group group = new Group()
-            //    {
-
-            //        Name = groupName,
-            //        Capacity = groupCapacity,
-            //        CreateDate = DateTime.Now,
-
-            //    };
-            //    try
-            //    {
-            //        var res = _groupService.Create(groupTeacherId, group);
-
-            //        ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
-            //                $"Capacity:{res.Capacity} CreateDate:{res.CreateDate} TeacherId {res.Teacher.Id} TeacherName {res.Teacher.Name} " +
-            //                $"TeacherSurname {res.Teacher.Surname} TeacherAge {res.Teacher.Age} TeacherAddress {res.Teacher.Address}");
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-            //        ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "This name is used");
-            //        ConsoleColor.DarkRed.WriteConsole("Please add new group name");
-            //        goto GroupName;
-            //    }
-            //}
-
-            //ConsoleColor.DarkCyan.WriteConsole("Please add teacher id:");
-            //TeacherId: string groupTeacherIdStr = Console.ReadLine();
-
-            //int groupTeacherId;
-            //bool isCorrectGroupTeacherId = int.TryParse(groupTeacherIdStr, out groupTeacherId);
-
-            //if (!isCorrectGroupTeacherId)
-            //{
-            //    ConsoleColor.DarkRed.WriteConsole("Please add correct  format id");
-            //}
-
-
-
-            //Group group = new Group()
-            //{
-
-            //    Name = groupName,
-            //    Capacity = groupCapacity,
-            //    CreateDate = DateTime.Now,
-
-            //};
-            //try
-            //{
-            //    var res = _groupService.Create(groupTeacherId, group);
-
-            //    ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
-            //            $"Capacity:{res.Capacity} CreateDate:{res.CreateDate} TeacherId {res.Teacher.Id} TeacherName {res.Teacher.Name} " +
-            //            $"TeacherSurname {res.Teacher.Surname} TeacherAge {res.Teacher.Age} TeacherAddress {res.Teacher.Address}");
-
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "This name is used");
-            //    ConsoleColor.DarkRed.WriteConsole("Please add new group name");
-            //    goto GroupName;
-
-            //}
         }
-    }    
-        public void Search()
+        public void SearchMethodForGroupByName()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
         Searchtext: string searchText = Console.ReadLine();
+           var name5 = searchText;
 
-            if (searchText == string.Empty)
+            if (!Regex.IsMatch(name5, @"^[a-zA-Z0-9]+$") || searchText == string.Empty )
             {
-                ConsoleColor.DarkRed.WriteConsole("Please  dont empty search text");
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format search text");
                 goto Searchtext;
             }
 
@@ -265,32 +151,19 @@ namespace CourseApp.Controllers
                 foreach (var item in response)
                 {
                     ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
-                       $"Capacity:{item.Capacity} Create:{item.CreateDate} Teacher:{item.Teacher}");
+                $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
+                $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
+                $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
+                $"TeacherAddress {item.Teacher.Address}");
                 }
             }
             catch (Exception ex)
             {
-                ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add search text again");
-                goto Searchtext;
+                ConsoleColor.DarkRed.WriteConsole(ex.Message);
             }
 
         }
-        public void GetAll()
-        {
-            var result = _groupService.GetAll();
-            if (result.Count == 0)
-            {
-                ConsoleColor.DarkRed.WriteConsole("Data  not found");
-            }
-            else
-            {
-                foreach (var item in result)
-                {
-                    ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
-                            $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
-                            $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} TeacherAddress {item.Teacher.Address}");
-                }
-            }
+       
+
         }
-    }
 }            

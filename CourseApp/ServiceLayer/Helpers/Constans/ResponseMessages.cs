@@ -10,5 +10,6 @@ namespace ServiceLayer.Helpers.Constans
     {
         public const string NotFound = "Data not found";
         public const string ArgumentNull = "This argument has already been used";
+        public const string ArgumentNameNonNull = "This group name has already been used. Please use a different group name next time";
     }
 }

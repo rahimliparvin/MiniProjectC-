@@ -44,9 +44,9 @@ while (true)
             case (int)Options.UpdateGroup:
                 Console.WriteLine("Delete");
                 break;
-            //case (int)Options.GetGroupById:
-            //    groupController.GetById();
-            //    break;
+            case (int)Options.GetGroupById:
+                groupController.GetGroupById();
+                break;
             case (int)Options.DeleteGroup:
                 Console.WriteLine("Delete");
                 break;
@@ -60,7 +60,7 @@ while (true)
                 Console.WriteLine("Delete");
                 break;
             case (int)Options.SearchMethodForGroupByName:
-                groupController.Search();
+                groupController.SearchMethodForGroupByName();
                 break;
             case (int)Options.GetAllGroupsCount:
                 Console.WriteLine("Delete");

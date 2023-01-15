@@ -29,30 +29,34 @@ namespace ServiceLayer.Services
         {
             group.Id = _count;
             Group existGroup = _repo.Get(m => m.Name.ToLower() == group.Name.ToLower());
-            if (existGroup != null) throw new InvalidGroupException(ResponseMessages.ArgumentNull);
+            if (existGroup != null) throw new InvalidGroupException(ResponseMessages.ArgumentNull +
+              ". Please use a different group name next time");
+
             Teacher existTeacher = _teacher.Get(m => m.Id == teacherId);
-            if(existTeacher != null)
+            if (existTeacher != null)
             {
                 group.Teacher = existTeacher;
             }
             else
             {
-               throw new NotFoundException(ResponseMessages.NotFound);
+                throw new NotFoundException(ResponseMessages.NotFound + 
+                ". Please add different TeacherId  next time ");
             }
-          
-            _repo.Create(teacherId ,group);
+            _repo.Create(teacherId, group);
             _count++;
             return group;
         }
+           
 
         public Group Delete(int? group)
         {
             throw new NotImplementedException();
         }
 
-        public List<Group> GetAll(Predicate<Group> predicate = null)
+        public List<Group> GetAll()
         {
-            return predicate == null ? AppDbContext<Group>.datas : AppDbContext<Group>.datas.FindAll(predicate);
+            return _repo.GetAll();
+            //return predicate == null ? AppDbContext<Group>.datas : AppDbContext<Group>.datas.FindAll(predicate);
         }
 
         public Group GetById(int id)
@@ -76,7 +80,9 @@ namespace ServiceLayer.Services
 
         public Group GetGroupById(int id)
         {
-            throw new NotImplementedException();
+            Group group = _repo.Get(m => m.Id == id);
+            if (group == null) throw new NotFoundException(ResponseMessages.NotFound);
+            return group;
         }
 
         public List<Group> GetGroupsByCapacity()

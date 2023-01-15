@@ -26,15 +26,8 @@ namespace CourseApp.Controllers
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher name");
             TeacherName: string teacherName = Console.ReadLine();
 
-            if (teacherName == string.Empty)
-            {
-                ConsoleColor.DarkRed.WriteConsole("Please add teacher name");
-                goto TeacherName;
-
-            }
-
             var name = teacherName;
-            if (!Regex.IsMatch(name, "^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(name, "^[a-zA-Z]+$") || teacherName == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct name");
                 goto TeacherName;
@@ -43,14 +36,8 @@ namespace CourseApp.Controllers
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher surname");
             TeacherSurname: string teacherSurname = Console.ReadLine();
 
-            if (teacherSurname == string.Empty)
-            {
-                ConsoleColor.DarkRed.WriteConsole("Please add teacher surname");
-                goto TeacherSurname;
-            }
-           
             var surname = teacherSurname;
-            if (!Regex.IsMatch(surname, "^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(surname, "^[a-zA-Z]+$") || teacherSurname == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct surname");
                 goto TeacherSurname;
@@ -70,7 +57,7 @@ namespace CourseApp.Controllers
             int teacherAge;
 
             bool  isCorrectTeacherAge = int.TryParse(teacherAgeStr, out teacherAge);
-            if (isCorrectTeacherAge)
+            if (isCorrectTeacherAge && teacherAge >= 18 && teacherAge < 66)
             {
                 try
                 {
@@ -94,7 +81,7 @@ namespace CourseApp.Controllers
             }
             else
             {
-                ConsoleColor.DarkRed.WriteConsole("Please add correct format age");
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format age. Age limit [min 18 ,max 65] ");
                 goto Age;
             }
 
@@ -146,21 +133,13 @@ namespace CourseApp.Controllers
         public void Search()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
-        Searchtext: string searchText = Console.ReadLine();
+            Searchtext: string searchText = Console.ReadLine();
 
-            if (!Regex.IsMatch(searchText, "^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(searchText, "^[a-zA-Z]+$") || searchText == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct format search text");
                 goto Searchtext;
             }  
-
-
-
-            if (searchText ==  string.Empty)
-            {
-              ConsoleColor.DarkRed.WriteConsole("Please  dont empty search text");
-              goto Searchtext;
-            }
 
             try
             {
@@ -174,8 +153,7 @@ namespace CourseApp.Controllers
             }
             catch (Exception ex)
             {
-                ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add search text again");
-                goto Searchtext;
+                ConsoleColor.DarkRed.WriteConsole(ex.Message);
             }
            
         }
@@ -216,7 +194,7 @@ namespace CourseApp.Controllers
             int teacherId;
             bool isCorrectTeacherId = int.TryParse(teacherIdStr, out teacherId);
           
-            if (isCorrectTeacherId)
+            if (isCorrectTeacherId && teacherId >= 1)
             {
                 var result = _teacherService.Update(teacherId);
                 if (result != null)
@@ -330,7 +308,7 @@ namespace CourseApp.Controllers
             int teacherNewAge;
             bool isCorrectTeacherNewAge = int.TryParse(teacherNewAgeStr, out teacherNewAge);
 
-            if (isCorrectTeacherNewAge)
+            if (isCorrectTeacherNewAge && teacherNewAge >= 18 && teacherNewAge < 66)
             {
                     result1.Age = teacherNewAge;
                     teacherNewAge = result1.Age;
@@ -345,7 +323,7 @@ namespace CourseApp.Controllers
                 }
                 else
                 {
-                    ConsoleColor.DarkRed.WriteConsole("Please add correct format age");
+                    ConsoleColor.DarkRed.WriteConsole("Please add correct format age. Age limit [min 18, max 65]");
                     goto TeacherNewAge;
                 }
             }
