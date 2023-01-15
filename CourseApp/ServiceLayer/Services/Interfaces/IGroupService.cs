@@ -12,7 +12,7 @@ namespace ServiceLayer.Services.Interfaces
         Group Create(int id ,Group group);
         Group Delete(int? group);
         Group GetGroupById(int id);  
-        List<Group> GetAll();
+        
         List<Group> Search(string searchText);
         Group Update(int id,Group group);
         List<Group> GetGroupsByCapacity();

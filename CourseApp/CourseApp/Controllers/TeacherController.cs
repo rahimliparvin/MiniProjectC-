@@ -156,10 +156,10 @@ namespace CourseApp.Controllers
 
 
 
-                if (searchText ==  string.Empty)
+            if (searchText ==  string.Empty)
             {
-                ConsoleColor.DarkRed.WriteConsole("Please  dont empty search text");
-                goto Searchtext;
+              ConsoleColor.DarkRed.WriteConsole("Please  dont empty search text");
+              goto Searchtext;
             }
 
             try

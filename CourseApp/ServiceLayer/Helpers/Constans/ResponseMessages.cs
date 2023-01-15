@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Helpers.Constans
 {
-    public class ResponseMessages
+    public static class ResponseMessages
     {
         public const string NotFound = "Data not found";
+        public const string ArgumentNull = "This argument has already been used";
     }
 }

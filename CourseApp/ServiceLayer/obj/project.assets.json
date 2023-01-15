@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CASPER\\Desktop\\MiniProject\\CourseApp\\ServiceLayer\\ServiceLayer.csproj",
+      "projectUniqueName": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\ServiceLayer\\ServiceLayer.csproj",
       "projectName": "ServiceLayer",
-      "projectPath": "C:\\Users\\CASPER\\Desktop\\MiniProject\\CourseApp\\ServiceLayer\\ServiceLayer.csproj",
+      "projectPath": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\ServiceLayer\\ServiceLayer.csproj",
       "packagesPath": "C:\\Users\\CASPER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CASPER\\Desktop\\MiniProject\\CourseApp\\ServiceLayer\\obj\\",
+      "outputPath": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\ServiceLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\CASPER\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -71,8 +71,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\CASPER\\Desktop\\MiniProject\\CourseApp\\RepositoryLayer\\RepositoryLayer.csproj": {
-              "projectPath": "C:\\Users\\CASPER\\Desktop\\MiniProject\\CourseApp\\RepositoryLayer\\RepositoryLayer.csproj"
+            "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\RepositoryLayer\\RepositoryLayer.csproj": {
+              "projectPath": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\RepositoryLayer\\RepositoryLayer.csproj"
             }
           }
         }

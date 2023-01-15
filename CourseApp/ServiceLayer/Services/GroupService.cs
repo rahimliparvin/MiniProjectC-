@@ -1,6 +1,8 @@
 ﻿using DomainLayer.Entities;
+using RepositoryLayer.Data;
 using RepositoryLayer.Repositories;
 using ServiceLayer.Exceptions;
+using ServiceLayer.Helpers;
 using ServiceLayer.Helpers.Constans;
 using ServiceLayer.Services.Interfaces;
 using System;
@@ -27,11 +29,17 @@ namespace ServiceLayer.Services
         {
             group.Id = _count;
             Group existGroup = _repo.Get(m => m.Name.ToLower() == group.Name.ToLower());
-            if (existGroup != null) throw new ArgumentNullException();
+            if (existGroup != null) throw new InvalidGroupException(ResponseMessages.ArgumentNull);
             Teacher existTeacher = _teacher.Get(m => m.Id == teacherId);
-            group.Teacher = existTeacher;
-            if (existTeacher == null) throw new ArgumentNullException();
-
+            if(existTeacher != null)
+            {
+                group.Teacher = existTeacher;
+            }
+            else
+            {
+               throw new NotFoundException(ResponseMessages.NotFound);
+            }
+          
             _repo.Create(teacherId ,group);
             _count++;
             return group;
@@ -42,9 +50,9 @@ namespace ServiceLayer.Services
             throw new NotImplementedException();
         }
 
-        public List<Group> GetAll()
+        public List<Group> GetAll(Predicate<Group> predicate = null)
         {
-            throw new NotImplementedException();
+            return predicate == null ? AppDbContext<Group>.datas : AppDbContext<Group>.datas.FindAll(predicate);
         }
 
         public Group GetById(int id)
