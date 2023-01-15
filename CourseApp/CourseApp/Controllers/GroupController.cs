@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Dynamic;
 using System.Text.RegularExpressions;
 using Group = DomainLayer.Entities.Group;
+using RepositoryLayer.Repositories;
 
 namespace CourseApp.Controllers
 {
@@ -17,13 +18,13 @@ namespace CourseApp.Controllers
     public class GroupController
     {
         private readonly IGroupService _groupService;
+       
         public GroupController()
         {
             _groupService = new GroupService();
         }
 
 
-        DateTime dateTime = DateTime.Now;
         public void Create()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add group name:");
@@ -49,16 +50,18 @@ namespace CourseApp.Controllers
 
             if (isCorrectGroupTeacherId)
             {
+              
                 Group group = new Group()
                 {
+                    
                     Name = groupName,
                     Capacity = groupCapacity,
                     CreateDate= DateTime.Now,
-                 //   Teacher[indexer] = teacher.id
+                
                 };
-                var response = _groupService.Create(group);
-                ConsoleColor.Green.WriteConsole($"Id:{response.Id} Name:{response.Name} " +
-                        $"Capacity:{response.Capacity} CreateDate:{response.CreateDate} Teacher:{response.Teacher}");
+                var  res =  _groupService.Create(groupTeacherId , group);
+                ConsoleColor.Green.WriteConsole($"Id:{res.Id} Name:{res.Name} " +
+                        $"Capacity:{res.Capacity} CreateDate:{res.CreateDate} Teacher:{res.Teacher.Name}");
             }
             else
             {
@@ -66,35 +69,35 @@ namespace CourseApp.Controllers
                 goto TeacherId;
             };
         }
-        public void GetById()
-        {
-            ConsoleColor.DarkCyan.WriteConsole("Please add Id");
-        Id: string idStr = Console.ReadLine();
+        //public void GetById()
+        //{
+        //    ConsoleColor.DarkCyan.WriteConsole("Please add Id");
+        //Id: string idStr = Console.ReadLine();
 
-            int id;
+        //    int id;
 
-            bool isCorrectId = int.TryParse(idStr, out id);
-            if (isCorrectId)
-            {
-                try
-                {
-                    var respons = _groupService.GetById(id);
-                    ConsoleColor.Green.WriteConsole($"Id:{respons.Id} Name:{respons.Name}" +
-                        $" Capacity:{respons.Capacity} Teacher{respons.Teacher} ");
-                }
-                catch (Exception ex)
-                {
-                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add again id");
-                    goto Id;
-                }
-            }
-            else
-            {
-                ConsoleColor.DarkRed.WriteConsole("Please add correct format id");
-                goto Id;
-            }
+        //    bool isCorrectId = int.TryParse(idStr, out id);
+        //    if (isCorrectId)
+        //    {
+        //        try
+        //        {
+        //       //     var respons = _groupService.GetById(id);
+        //            ConsoleColor.Green.WriteConsole($"Id:{respons.Id} Name:{respons.Name}" +
+        //                $" Capacity:{respons.Capacity} Teacher{respons.Teacher} ");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add again id");
+        //            goto Id;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ConsoleColor.DarkRed.WriteConsole("Please add correct format id");
+        //        goto Id;
+        //    }
             
-        }
+        //}
         public void Search()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add search text:");

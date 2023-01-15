@@ -63,18 +63,11 @@ namespace ServiceLayer.Services
             return teachers;
         }
 
-
-
         public Teacher Update(int id)
         {
             Teacher teacher1 = _repo.Get(m => m.Id == id);
-            //if (teacher1 == null) throw new ArgumentNullException();//throw new NotFoundException(ResponseMessages.NotFound);
+            
             return teacher1;
-          //  if (id == null) throw new ArgumentNullException();
-           // if (teacher == null) throw new ArgumentNullException();
-           // Teacher  teacher1 = _repo.Get(m => m.Id == id);
-           
-
         }
     }
 }

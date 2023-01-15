@@ -13,23 +13,26 @@ namespace ServiceLayer.Services
 {
     public class GroupService : IGroupService
     {
+        private readonly TeacherRepository _teacher;
         private readonly GroupRepository _repo;
         public GroupService()
         {
+            _teacher = new TeacherRepository();
             _repo = new GroupRepository();
         }
 
+
         private int _count = 1;
-        private int _teacherId;
-        public Group Create(Group group)
+        public Group Create(int teacherId, Group group)
         {
             group.Id = _count;
+            Group existGroup = _repo.Get(m => m.Name.ToLower() == group.Name.ToLower());
+            if (existGroup != null) throw new ArgumentNullException();
+            Teacher existTeacher = _teacher.Get(m => m.Id == teacherId);
+            group.Teacher = existTeacher;
+            if (existTeacher == null) throw new ArgumentNullException();
 
-          //  Group existGroup = _repo.Get(m => m.Name.ToLower() == group.Name.ToLower());
-            //if (existGroup != null) throw new Exception("")
-           // if (teacher == null) throw new Exception("This id's teacher not found");
-
-            _repo.Create(group);
+            _repo.Create(teacherId ,group);
             _count++;
             return group;
         }
@@ -62,5 +65,39 @@ namespace ServiceLayer.Services
         {
             throw new NotImplementedException();
         }
+
+        public Group GetGroupById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Group> GetGroupsByCapacity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Group> GetGroupsByTeacherId()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Group> GetAllGroupsByTeacherName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Group SearchMethodForGroupByName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Group> GetAllGroupsCount()
+        {
+            throw new NotImplementedException();
+        }
+
+      
     }
 }
+
+

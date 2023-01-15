@@ -11,10 +11,15 @@ namespace RepositoryLayer.Repositories
 {
     public class GroupRepository : IRepository<Group>
     {
-        public void Create(Group entity)
+        public void Create(int id ,Group entity)
         {
             if (entity == null) throw new ArgumentNullException();
             AppDbContext<Group>.datas.Add(entity);
+        }
+
+        public void Create(Group entity)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(Group entity)
