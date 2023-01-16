@@ -163,7 +163,63 @@ namespace CourseApp.Controllers
             }
 
         }
-       
+        public void Delete()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add group id for delete:");
+        GroupId: string groupId = Console.ReadLine();
 
+            int id;
+
+            bool isCorrectId = int.TryParse(groupId, out id);
+
+            if (isCorrectId && id >= 1)
+                try
+                {
+                    _groupService.Delete(id);
+                    ConsoleColor.Green.WriteConsole("Successfully delete group");
+                }
+                catch (Exception ex)
+                {
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add group id again");
+                    goto GroupId;
+                }
+            else
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format id.Id limit [min 1] ");
+                goto GroupId;
+            }
         }
+        public void GetGroupsByCapacity()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add group  capacity");
+            string groupCapacityStr = Console.ReadLine();
+
+            int groupCapacity;
+            bool isCorrectGroupCapacity = int.TryParse(groupCapacityStr, out groupCapacity);
+            if (isCorrectGroupCapacity && groupCapacity >= 18 && groupCapacity < 41)
+            {
+                try
+                {
+                    var group = _groupService.GetGroupsByCapacity(groupCapacity);
+                    ConsoleColor.Green.WriteConsole($"Id:{group.Id} Name:{group.Name} " +
+                    $"Capacity:{group.Capacity} CreateDate:{group.CreateDate} " +
+                    $"TeacherId {group.Teacher.Id} TeacherName {group.Teacher.Name} " +
+                    $"TeacherSurname {group.Teacher.Surname} TeacherAge {group.Teacher.Age} " +
+                    $"TeacherAddress {group.Teacher.Address}");
+                }
+                catch (Exception ex)
+                {
+
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message);
+
+                }
+              
+            }
+            else
+            {
+                ConsoleColor.DarkRed.WriteConsole("Pease add correct format capacity. Capacity limit[min 1,max 40]");
+            }
+        }
+
+    }
 }            

@@ -48,10 +48,10 @@ while (true)
                 groupController.GetGroupById();
                 break;
             case (int)Options.DeleteGroup:
-                Console.WriteLine("Delete");
+                groupController.Delete();
                 break;
             case (int)Options.GetGroupsByCapacity:
-                Console.WriteLine("Delete");
+                groupController.GetGroupsByCapacity();
                 break;
             case (int)Options.GetGroupsByTeacherId:
                 Console.WriteLine("Delete");

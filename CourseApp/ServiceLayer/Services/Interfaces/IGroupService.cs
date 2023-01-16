@@ -10,15 +10,13 @@ namespace ServiceLayer.Services.Interfaces
     public interface IGroupService
     {
         Group Create(int id ,Group group);
-        Group Delete(int? group);
-        Group GetGroupById(int id);  
-        
+        void Delete(int? id);
+        Group GetGroupById(int id);    
         List<Group> Search(string searchText);
         Group Update(int id,Group group);
-        List<Group> GetGroupsByCapacity();
+        Group GetGroupsByCapacity(int capacity);
         List<Group> GetGroupsByTeacherId();
         List<Group> GetAllGroupsByTeacherName();
-        Group SearchMethodForGroupByName();
         List<Group> GetAllGroupsCount();
 
 

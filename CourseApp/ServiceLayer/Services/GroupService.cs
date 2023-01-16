@@ -45,26 +45,15 @@ namespace ServiceLayer.Services
             _repo.Create(teacherId, group);
             _count++;
             return group;
+
         }
            
-
-        public Group Delete(int? group)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Group> GetAll()
-        {
-            return _repo.GetAll();
-            //return predicate == null ? AppDbContext<Group>.datas : AppDbContext<Group>.datas.FindAll(predicate);
-        }
-
-        public Group GetById(int id)
-        {
-            Group group = _repo.Get(m => m.Id == id);
-            if (group == null) throw new NotFoundException(ResponseMessages.NotFound);
-            return group;
-        }
+        //public Group GetById(int id)
+        //{
+        //    Group group = _repo.Get(m => m.Id == id);
+        //    if (group == null) throw new NotFoundException(ResponseMessages.NotFound);
+        //    return group;
+        //}
 
         public List<Group> Search(string searchText)
         {
@@ -85,9 +74,14 @@ namespace ServiceLayer.Services
             return group;
         }
 
-        public List<Group> GetGroupsByCapacity()
+        public Group GetGroupsByCapacity(int capacity)
         {
-            throw new NotImplementedException();
+            Group group = _repo.Get(m => m.Capacity == capacity);
+            if (group == null) throw new NotFoundException(ResponseMessages.NotFound);
+            return group;
+            //Group result = _repo.Get(m => m.Capacity == capacity);
+            //if (result == null) throw new NotFoundException(ResponseMessages.NotFound);
+            // return result;
         }
 
         public List<Group> GetGroupsByTeacherId()
@@ -100,17 +94,35 @@ namespace ServiceLayer.Services
             throw new NotImplementedException();
         }
 
-        public Group SearchMethodForGroupByName()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Group> GetAllGroupsCount()
         {
             throw new NotImplementedException();
         }
 
-      
+        public void Delete(int? id)
+        {
+            if (id is null) throw new ArgumentNullException();
+
+               Group dbGroup = _repo.Get(m => m.Id == id);
+
+               if (dbGroup == null) ConsoleColor.DarkRed.WriteConsole(ResponseMessages.NotFound);
+
+                _repo.Delete(dbGroup);
+        }
+
+        //public void Delete(int?id group)
+        //{
+
+        //    if (id is null) throw new ArgumentNullException();
+
+        //    Group dbGroup = _repo.Get(m => m.Id == id);
+
+        //    if (dbGroup == null) ConsoleColor.DarkRed.WriteConsole(ResponseMessages.NotFound);
+
+        //    _repo.Delete(dbGroup);
+        //}
+
+
     }
 }
 
