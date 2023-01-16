@@ -74,22 +74,18 @@ namespace ServiceLayer.Services
             return group;
         }
 
-        //public List<Group> GetGroupsByCapacity(int capacity)
-        //{
-        //    List<Group> groupss = _repo.GetAll(m => m.Capacity == capacity);
-        //    if (groupss == null) throw new NotFoundException(ResponseMessages.NotFound);
-        //    return  groupss;
-           
-        //}
-
-        public List<Group> GetGroupsByTeacherId()
+        public List<Group> GetGroupsByTeacherId(int id)
         {
-            throw new NotImplementedException();
+            List<Group> groups = _repo.GetAll(m => m.Teacher.Id == id);
+            if(groups.Count ==0) throw new NotFoundException(ResponseMessages.NotFound);
+            return groups;
         }
 
-        public List<Group> GetAllGroupsByTeacherName()
+        public List<Group> GetAllGroupsByTeacherName(string teacherName)
         {
-            throw new NotImplementedException();
+            List<Group> groups = _repo.GetAll(m => m.Teacher.Name.ToLower() == teacherName.ToLower());
+            if (groups.Count == 0) throw new NotFoundException(ResponseMessages.NotFound);
+            return groups;
         }
 
         public List<Group> GetAllGroupsCount()
@@ -111,7 +107,7 @@ namespace ServiceLayer.Services
         public List<Group> GetGroupsByCapacity(int capacity)
         {
             List<Group> groupss = _repo.GetAll(m => m.Capacity == capacity);
-            if (groupss == null) throw new NotFoundException(ResponseMessages.NotFound);
+            if (groupss.Count == 0) throw new NotFoundException(ResponseMessages.NotFound);
             return groupss;
         }
     }

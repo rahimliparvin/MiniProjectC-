@@ -54,10 +54,10 @@ while (true)
                 groupController.GetGroupsByCapacity();
                 break;
             case (int)Options.GetGroupsByTeacherId:
-                Console.WriteLine("Delete");
+                groupController.GetGroupsByTeacherId();
                 break;
             case (int)Options.GetAllGroupsByTeacherName:
-                Console.WriteLine("Delete");
+                groupController.GetAllGroupsByTeacherName();
                 break;
             case (int)Options.SearchMethodForGroupByName:
                 groupController.SearchMethodForGroupByName();
@@ -81,9 +81,8 @@ while (true)
 static  void GetOptions()
 {
     ConsoleColor.DarkYellow.WriteConsole("Please select one option");
-    ConsoleColor.Blue.WriteConsole("\n Teacher options : \n 1-Create teacher , \n 2-Update teacher , 3-Delete teacher , " +
-        "4-Get teacher by id , 5-Get all teachers , 6-Search method for teacher name and surname ," +
-        " 7- Create group , 8- Update group , 9-Get group by id , 10-Delete group , 11-Get groups by capacity , " +
-        "12- Get groups by teacherId , 13- Get all groups by teacherName , 14- Search method  for group by name ," +
-        " 15- Get all groups count");
+    ConsoleColor.Blue.WriteConsole("\n Teacher options : \n 1-Create teacher , \n 2-Update teacher , \n 3-Delete teacher , " +
+        " \n 4-Get teacher by id , \n 5-Get all teachers , \n 6-Search method for teacher name and surname ,\n Group options :  \n 7-Create group , \n 8-Update group , \n 9-Get group by id , \n 10-Delete group , \n 11-Get groups by capacity , " +
+        " \n 12-Get groups by teacherId , \n 13-Get all groups by teacherName , \n 14-Search method  for group by name ," +
+        " \n 15-Get all groups count");
 }

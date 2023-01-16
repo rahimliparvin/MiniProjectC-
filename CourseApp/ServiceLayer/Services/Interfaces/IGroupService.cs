@@ -15,8 +15,8 @@ namespace ServiceLayer.Services.Interfaces
         List<Group> Search(string searchText);
         Group Update(int id,Group group);
         List<Group> GetGroupsByCapacity(int capacity);
-        List<Group> GetGroupsByTeacherId();
-        List<Group> GetAllGroupsByTeacherName();
+        List<Group> GetGroupsByTeacherId(int id);
+        List<Group> GetAllGroupsByTeacherName(string text);
         List<Group> GetAllGroupsCount();
 
 

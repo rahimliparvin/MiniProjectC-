@@ -119,7 +119,8 @@ namespace CourseApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ConsoleColor.DarkRed.WriteConsole(ex.Message);
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add different id");
+                    goto Id;
                    
                 }
                
@@ -192,16 +193,16 @@ namespace CourseApp.Controllers
         public void GetGroupsByCapacity()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add group  capacity");
-            string groupCapacityStr = Console.ReadLine();
+            Capacity: string groupCapacityStr = Console.ReadLine();
 
             int groupCapacity;
             bool isCorrectGroupCapacity = int.TryParse(groupCapacityStr, out groupCapacity);
-            if (isCorrectGroupCapacity && groupCapacity > 1 && groupCapacity < 40)
+            if (isCorrectGroupCapacity && groupCapacity > 0 && groupCapacity < 40)
             {
                 try
                 {
-                 var groupsCapacity    = _groupService.GetGroupsByCapacity(groupCapacity);
-
+                    var groupsCapacity  = _groupService.GetGroupsByCapacity(groupCapacity);
+                    
                     foreach (var item in groupsCapacity)
                     {
                         ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
@@ -209,14 +210,15 @@ namespace CourseApp.Controllers
                         $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
                         $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
                         $"TeacherAddress {item.Teacher.Address}");
+                       
                     }
-                
-                }     
-                
+                }
+
                 catch (Exception ex)
                 {
 
-                    ConsoleColor.DarkRed.WriteConsole(ex.Message);
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add different capacity");
+                    goto Capacity;
 
                 }
               
@@ -224,21 +226,80 @@ namespace CourseApp.Controllers
             else
             {
                 ConsoleColor.DarkRed.WriteConsole("Pease add correct format capacity. Capacity limit[min 1,max 40]");
+                goto Capacity;
+            }
+        }	
+        public void GetGroupsByTeacherId()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add id");
+            TeacherId: string teacherIdStr = Console.ReadLine();
+
+            int teacherId;
+            bool isCorrectId = int.TryParse(teacherIdStr, out teacherId);
+            if (isCorrectId && teacherId > 0)
+            {
+                try
+                {
+                    var groupsTeacherId  =  _groupService.GetGroupsByTeacherId(teacherId);
+
+                    foreach (var item in groupsTeacherId)
+                    {
+                        ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
+                       $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
+                       $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
+                       $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
+                       $"TeacherAddress {item.Teacher.Address}");
+                       
+
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add different teacher id");
+                    goto TeacherId;
+                }
+            }
+            else
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format id");
+                goto TeacherId;
             }
         }
+        public void GetAllGroupsByTeacherName()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add teacher name");
+            TeacherName: string teacherName = Console.ReadLine();
+            var nameTeacher = teacherName;
+            if(!Regex.IsMatch(nameTeacher,"^[a-zA-Z]+$" ) || teacherName == string.Empty)
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format teacher name");
+                goto TeacherName;
 
+            }
+            else
+            {
+                try
+                {
+                    var groupsByTeacherName = _groupService.GetAllGroupsByTeacherName(teacherName);
+                    foreach (var item in groupsByTeacherName)
+                    {
+                        ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
+                         $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
+                         $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
+                         $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
+                         $"TeacherAddress {item.Teacher.Address}");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add different teacher name");
+                    goto TeacherName;
+                }
+            }
+        }
     }
 }
-// foreach (var item in groups)
-// {
-//     ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
-//$"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
-//$"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
-//$"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
-//$"TeacherAddress {item.Teacher.Address}");
-// }
-//ConsoleColor.Green.WriteConsole($"Id:{group.Id} Name:{group.Name} " +
-//$"Capacity:{group.Capacity} CreateDate:{group.CreateDate} " +
-//$"TeacherId {group.Teacher.Id} TeacherName {group.Teacher.Name} " +
-//$"TeacherSurname {group.Teacher.Surname} TeacherAge {group.Teacher.Age} " +
-//$"TeacherAddress {group.Teacher.Address}");
