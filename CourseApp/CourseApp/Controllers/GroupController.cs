@@ -196,17 +196,23 @@ namespace CourseApp.Controllers
 
             int groupCapacity;
             bool isCorrectGroupCapacity = int.TryParse(groupCapacityStr, out groupCapacity);
-            if (isCorrectGroupCapacity && groupCapacity >= 18 && groupCapacity < 41)
+            if (isCorrectGroupCapacity && groupCapacity > 1 && groupCapacity < 40)
             {
                 try
                 {
-                    var group = _groupService.GetGroupsByCapacity(groupCapacity);
-                    ConsoleColor.Green.WriteConsole($"Id:{group.Id} Name:{group.Name} " +
-                    $"Capacity:{group.Capacity} CreateDate:{group.CreateDate} " +
-                    $"TeacherId {group.Teacher.Id} TeacherName {group.Teacher.Name} " +
-                    $"TeacherSurname {group.Teacher.Surname} TeacherAge {group.Teacher.Age} " +
-                    $"TeacherAddress {group.Teacher.Address}");
-                }
+                 var groupsCapacity    = _groupService.GetGroupsByCapacity(groupCapacity);
+
+                    foreach (var item in groupsCapacity)
+                    {
+                        ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
+                        $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
+                        $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
+                        $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
+                        $"TeacherAddress {item.Teacher.Address}");
+                    }
+                
+                }     
+                
                 catch (Exception ex)
                 {
 
@@ -222,4 +228,17 @@ namespace CourseApp.Controllers
         }
 
     }
-}            
+}
+// foreach (var item in groups)
+// {
+//     ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
+//$"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
+//$"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
+//$"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
+//$"TeacherAddress {item.Teacher.Address}");
+// }
+//ConsoleColor.Green.WriteConsole($"Id:{group.Id} Name:{group.Name} " +
+//$"Capacity:{group.Capacity} CreateDate:{group.CreateDate} " +
+//$"TeacherId {group.Teacher.Id} TeacherName {group.Teacher.Name} " +
+//$"TeacherSurname {group.Teacher.Surname} TeacherAge {group.Teacher.Age} " +
+//$"TeacherAddress {group.Teacher.Address}");

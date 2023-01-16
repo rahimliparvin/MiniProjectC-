@@ -47,7 +47,7 @@ namespace ServiceLayer.Services
             return group;
 
         }
-           
+
         //public Group GetById(int id)
         //{
         //    Group group = _repo.Get(m => m.Id == id);
@@ -74,15 +74,13 @@ namespace ServiceLayer.Services
             return group;
         }
 
-        public Group GetGroupsByCapacity(int capacity)
-        {
-            Group group = _repo.Get(m => m.Capacity == capacity);
-            if (group == null) throw new NotFoundException(ResponseMessages.NotFound);
-            return group;
-            //Group result = _repo.Get(m => m.Capacity == capacity);
-            //if (result == null) throw new NotFoundException(ResponseMessages.NotFound);
-            // return result;
-        }
+        //public List<Group> GetGroupsByCapacity(int capacity)
+        //{
+        //    List<Group> groupss = _repo.GetAll(m => m.Capacity == capacity);
+        //    if (groupss == null) throw new NotFoundException(ResponseMessages.NotFound);
+        //    return  groupss;
+           
+        //}
 
         public List<Group> GetGroupsByTeacherId()
         {
@@ -110,19 +108,12 @@ namespace ServiceLayer.Services
                 _repo.Delete(dbGroup);
         }
 
-        //public void Delete(int?id group)
-        //{
-
-        //    if (id is null) throw new ArgumentNullException();
-
-        //    Group dbGroup = _repo.Get(m => m.Id == id);
-
-        //    if (dbGroup == null) ConsoleColor.DarkRed.WriteConsole(ResponseMessages.NotFound);
-
-        //    _repo.Delete(dbGroup);
-        //}
-
-
+        public List<Group> GetGroupsByCapacity(int capacity)
+        {
+            List<Group> groupss = _repo.GetAll(m => m.Capacity == capacity);
+            if (groupss == null) throw new NotFoundException(ResponseMessages.NotFound);
+            return groupss;
+        }
     }
 }
 
