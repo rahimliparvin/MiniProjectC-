@@ -24,20 +24,21 @@ namespace CourseApp.Controllers
         public void Create()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher name");
-            TeacherName: string teacherName = Console.ReadLine();
+        TeacherName: string teacherName = Console.ReadLine();
 
-            var name = teacherName;
-            if (!Regex.IsMatch(name, "^[a-zA-Z]+$") || teacherName == string.Empty)
+            var name = teacherName.Trim();
+            if (!Regex.IsMatch(name, @"^[a-zA-Z]+$")) 
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct name");
                 goto TeacherName;
-            }
-           
-            ConsoleColor.DarkCyan.WriteConsole("Please add teacher surname");
-            TeacherSurname: string teacherSurname = Console.ReadLine();
+            };
 
-            var surname = teacherSurname;
-            if (!Regex.IsMatch(surname, "^[a-zA-Z]+$") || teacherSurname == string.Empty)
+        
+            ConsoleColor.DarkCyan.WriteConsole("Please add teacher surname");
+        TeacherSurname: string teacherSurname = Console.ReadLine();
+
+            var surname = teacherSurname.Trim();
+            if (!Regex.IsMatch(surname, @"^[a-zA-Z]+$"))
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct surname");
                 goto TeacherSurname;
@@ -45,12 +46,13 @@ namespace CourseApp.Controllers
 
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher address");
             TeacherAddress: string teacherAddress = Console.ReadLine();
-            if (teacherAddress == string.Empty)
+            var address = teacherAddress.Trim();
+            if(address == string.Empty)
             {
-                ConsoleColor.DarkRed.WriteConsole("Please add teacher address");
+                ConsoleColor.DarkRed.WriteConsole("Address cannot be empty! Please add address");
                 goto TeacherAddress;
-
             }
+          
       
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher age");
             Age: string teacherAgeStr = Console.ReadLine();
@@ -63,10 +65,10 @@ namespace CourseApp.Controllers
                 {
                     Teacher teacher = new Teacher()
                     {
-                        Name = teacherName,
-                        Surname = teacherSurname,
+                        Name = name,
+                        Surname = surname,
                         Age = teacherAge,
-                        Address = teacherAddress
+                        Address = address
                     };
                     var response = _teacherService.Create(teacher);
                     ConsoleColor.Green.WriteConsole($"Id:{response.Id} Name:{response.Name} " +
@@ -134,8 +136,9 @@ namespace CourseApp.Controllers
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
             Searchtext: string searchText = Console.ReadLine();
+            var text = searchText.Trim();
 
-            if (!Regex.IsMatch(searchText, "^[a-zA-Z]+$") || searchText == string.Empty)
+            if (!Regex.IsMatch(text, "^[A-Za-z ]+$") || text == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct format search text");
                 goto Searchtext;
@@ -154,6 +157,7 @@ namespace CourseApp.Controllers
             catch (Exception ex)
             {
                 ConsoleColor.DarkRed.WriteConsole(ex.Message);
+                goto Searchtext;
             }
            
         }
@@ -188,7 +192,7 @@ namespace CourseApp.Controllers
         }
         public void Update()
         {
-            ConsoleColor.DarkCyan.WriteConsole("Please write teacher id");
+            ConsoleColor.DarkCyan.WriteConsole("Please add teacher id");
             Id:  string teacherIdStr = Console.ReadLine();
 
             int teacherId;
@@ -225,23 +229,23 @@ namespace CourseApp.Controllers
             }
                 
             var result1 = _teacherService.Update(teacherId);
+
             ConsoleColor.DarkCyan.WriteConsole("Please add new teacher name");
             TeacherNewName: string teacherNewName = Console.ReadLine();
 
-            var name = teacherNewName;
-            if (teacherNewName != string.Empty)
+            var teacherName = teacherNewName.Trim();
+            if (teacherName != string.Empty)
             {
-                if (!Regex.IsMatch(name, "^[a-zA-Z]+$"))
+                if (!Regex.IsMatch(teacherName, "^[a-zA-Z]+$"))
                 {
                     ConsoleColor.DarkRed.WriteConsole("Please add correct format name");
                     goto TeacherNewName;
                 }
                 else
                 {
-                    result1.Name = teacherNewName;
-                    teacherNewName = result1.Name;
-                    result1.Name = teacherNewName;
-
+                    result1.Name = teacherName;
+                    teacherName = result1.Name;
+                    result1.Name = teacherName;
                 }
 
             }
@@ -253,19 +257,19 @@ namespace CourseApp.Controllers
             ConsoleColor.DarkCyan.WriteConsole("Please add new teacher surname");
             TeacherNewSurname: string teacherNewSurname = Console.ReadLine();
 
-            var name1 = teacherNewSurname;
-            if (teacherNewSurname != string.Empty)
+            var teacherSurname = teacherNewSurname.Trim();
+            if (teacherSurname != string.Empty)
             {
-                if (!Regex.IsMatch(name1, "^[a-zA-Z]+$"))
+                if (!Regex.IsMatch(teacherSurname, "^[a-zA-Z]+$"))
                 {
                     ConsoleColor.DarkRed.WriteConsole("Please add correct format surname");
                     goto TeacherNewSurname;
                 }
                 else
                 {
-                    result1.Surname = teacherNewSurname;
-                    teacherNewSurname = result1.Surname;
-                    result1.Surname = teacherNewSurname;
+                    result1.Surname = teacherSurname;
+                    teacherSurname = result1.Surname;
+                    result1.Surname = teacherSurname;
 
                 }
 
@@ -277,24 +281,13 @@ namespace CourseApp.Controllers
 
             ConsoleColor.DarkCyan.WriteConsole("Please add new teacher address");
             TeacherNewAddress: string teacherNewAddress = Console.ReadLine();
-            var name2 = teacherNewAddress;
+            var teacherAddress = teacherNewAddress;
 
-            if (teacherNewAddress != string.Empty)
+            if (teacherAddress != string.Empty)
             {
-                if (!Regex.IsMatch(name2, "^[a-zA-Z]+$"))
-                {
-                    
-                    ConsoleColor.DarkRed.WriteConsole("Please add correct format address");
-                    goto TeacherNewAddress;
-                }
-                else
-                {
-                    result1.Address = teacherNewAddress;
-                    teacherNewAddress = result1.Address;
-                    result1.Address = teacherNewAddress;
-
-                }
-
+                    result1.Address = teacherAddress;
+                    teacherAddress = result1.Address;
+                    result1.Address = teacherAddress;
             }
             else
             {

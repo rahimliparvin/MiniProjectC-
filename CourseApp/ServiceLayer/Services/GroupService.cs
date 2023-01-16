@@ -83,14 +83,15 @@ namespace ServiceLayer.Services
 
         public List<Group> GetAllGroupsByTeacherName(string teacherName)
         {
-            List<Group> groups = _repo.GetAll(m => m.Teacher.Name.ToLower() == teacherName.ToLower());
+            List<Group> groups = _repo.GetAll(m => m.Teacher.Name.ToLower().Trim() == teacherName.ToLower().Trim());
             if (groups.Count == 0) throw new NotFoundException(ResponseMessages.NotFound);
             return groups;
         }
 
         public List<Group> GetAllGroupsCount()
         {
-            throw new NotImplementedException();
+            List<Group> groups = _repo.GetAll();
+            return groups;
         }
 
         public void Delete(int? id)

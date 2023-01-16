@@ -63,7 +63,7 @@ while (true)
                 groupController.SearchMethodForGroupByName();
                 break;
             case (int)Options.GetAllGroupsCount:
-                Console.WriteLine("Delete");
+                groupController.GetAllGroupsCount();
                 break;
             default:
                 ConsoleColor.DarkRed.WriteConsole("Please add correct option");

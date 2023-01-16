@@ -133,37 +133,6 @@ namespace CourseApp.Controllers
          
 
         }
-        public void SearchMethodForGroupByName()
-        {
-            ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
-        Searchtext: string searchText = Console.ReadLine();
-           var name5 = searchText;
-
-            if (!Regex.IsMatch(name5, @"^[a-zA-Z0-9]+$") || searchText == string.Empty )
-            {
-                ConsoleColor.DarkRed.WriteConsole("Please add correct format search text");
-                goto Searchtext;
-            }
-
-            try
-            {
-                var response = _groupService.Search(searchText);
-
-                foreach (var item in response)
-                {
-                    ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
-                $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
-                $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
-                $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
-                $"TeacherAddress {item.Teacher.Address}");
-                }
-            }
-            catch (Exception ex)
-            {
-                ConsoleColor.DarkRed.WriteConsole(ex.Message);
-            }
-
-        }
         public void Delete()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add group id for delete:");
@@ -270,9 +239,9 @@ namespace CourseApp.Controllers
         public void GetAllGroupsByTeacherName()
         {
             ConsoleColor.DarkCyan.WriteConsole("Please add teacher name");
-            TeacherName: string teacherName = Console.ReadLine();
-            var nameTeacher = teacherName;
-            if(!Regex.IsMatch(nameTeacher,"^[a-zA-Z]+$" ) || teacherName == string.Empty)
+        TeacherName: string teacherName = Console.ReadLine();
+            var nameTeacher = teacherName.Trim();
+            if(!Regex.IsMatch(nameTeacher,"^[a-zA-Z]+$") || nameTeacher == string.Empty)
             {
                 ConsoleColor.DarkRed.WriteConsole("Please add correct format teacher name");
                 goto TeacherName;
@@ -300,6 +269,46 @@ namespace CourseApp.Controllers
                     goto TeacherName;
                 }
             }
+        }
+        public void SearchMethodForGroupByName()
+        {
+            ConsoleColor.DarkCyan.WriteConsole("Please add search text:");
+        Searchtext: string searchText = Console.ReadLine();
+            var name5 = searchText;
+
+            if (!Regex.IsMatch(name5, @"^[a-zA-Z0-9]+$") || searchText == string.Empty)
+            {
+                ConsoleColor.DarkRed.WriteConsole("Please add correct format search text");
+                goto Searchtext;
+            }
+
+            try
+            {
+                var response = _groupService.Search(searchText);
+
+                foreach (var item in response)
+                {
+                    ConsoleColor.Green.WriteConsole($"Id:{item.Id} Name:{item.Name} " +
+                $"Capacity:{item.Capacity} CreateDate:{item.CreateDate} " +
+                $"TeacherId {item.Teacher.Id} TeacherName {item.Teacher.Name} " +
+                $"TeacherSurname {item.Teacher.Surname} TeacherAge {item.Teacher.Age} " +
+                $"TeacherAddress {item.Teacher.Address}");
+                }
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor.DarkRed.WriteConsole(ex.Message);
+            }
+
+        }
+        public void GetAllGroupsCount()
+        {
+            List<Group> groups = _groupService.GetAllGroupsCount();
+            //  int count = groups.Count;
+            if (groups.Count == 0) throw new NotFoundException(ResponseMessages.NotFound);
+            ConsoleColor.Green.WriteConsole(groups.Count.ToString());
+            
+            
         }
     }
 }
