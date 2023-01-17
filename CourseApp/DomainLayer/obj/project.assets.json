@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\DomainLayer\\DomainLayer.csproj",
+      "projectUniqueName": "C:\\Users\\CASPER\\Desktop\\EndMiniProject C#\\MiniProjectC-\\CourseApp\\DomainLayer\\DomainLayer.csproj",
       "projectName": "DomainLayer",
-      "projectPath": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\DomainLayer\\DomainLayer.csproj",
+      "projectPath": "C:\\Users\\CASPER\\Desktop\\EndMiniProject C#\\MiniProjectC-\\CourseApp\\DomainLayer\\DomainLayer.csproj",
       "packagesPath": "C:\\Users\\CASPER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CASPER\\Desktop\\MiniProjectC-\\CourseApp\\DomainLayer\\obj\\",
+      "outputPath": "C:\\Users\\CASPER\\Desktop\\EndMiniProject C#\\MiniProjectC-\\CourseApp\\DomainLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\CASPER\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -29,8 +29,7 @@ namespace ServiceLayer.Services
         {
             group.Id = _count;
             Group existGroup = _repo.Get(m => m.Name.ToLower() == group.Name.ToLower());
-            if (existGroup != null) throw new InvalidGroupException(ResponseMessages.ArgumentNull +
-              ". Please use a different group name next time");
+            if (existGroup != null) throw new InvalidGroupException(ResponseMessages.ArgumentNonNull);
 
             Teacher existTeacher = _teacher.Get(m => m.Id == teacherId);
             if (existTeacher != null)
@@ -47,13 +46,6 @@ namespace ServiceLayer.Services
             return group;
 
         }
-
-        //public Group GetById(int id)
-        //{
-        //    Group group = _repo.Get(m => m.Id == id);
-        //    if (group == null) throw new NotFoundException(ResponseMessages.NotFound);
-        //    return group;
-        //}
 
         public List<Group> Search(string searchText)
         {
@@ -100,7 +92,7 @@ namespace ServiceLayer.Services
 
                Group dbGroup = _repo.Get(m => m.Id == id);
 
-               if (dbGroup == null) ConsoleColor.DarkRed.WriteConsole(ResponseMessages.NotFound);
+            if (dbGroup == null) throw new NotFoundException(ResponseMessages.NotFound);
 
                 _repo.Delete(dbGroup);
         }

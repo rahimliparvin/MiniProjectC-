@@ -82,7 +82,8 @@ static  void GetOptions()
 {
     ConsoleColor.DarkYellow.WriteConsole("Please select one option");
     ConsoleColor.Blue.WriteConsole("\n Teacher options : \n 1-Create teacher , \n 2-Update teacher , \n 3-Delete teacher , " +
-        " \n 4-Get teacher by id , \n 5-Get all teachers , \n 6-Search method for teacher name and surname ,\n Group options :  \n 7-Create group , \n 8-Update group , \n 9-Get group by id , \n 10-Delete group , \n 11-Get groups by capacity , " +
+        " \n 4-Get teacher by id , \n 5-Get all teachers , \n 6-Search method for teacher name and surname");
+    ConsoleColor.Red.WriteConsole("\n Group options :  \n 7-Create group , \n 8-Update group , \n 9-Get group by id , \n 10-Delete group , \n 11-Get groups by capacity , " +
         " \n 12-Get groups by teacherId , \n 13-Get all groups by teacherName , \n 14-Search method  for group by name ," +
         " \n 15-Get all groups count");
 }

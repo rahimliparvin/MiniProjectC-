@@ -156,7 +156,7 @@ namespace CourseApp.Controllers
             }
             catch (Exception ex)
             {
-                ConsoleColor.DarkRed.WriteConsole(ex.Message);
+                ConsoleColor.DarkRed.WriteConsole(ex.Message + "/" + "Please add different search text");
                 goto Searchtext;
             }
            
